@@ -1,0 +1,41 @@
+# Configuration file for the Kotlin Toolchain.
+# See https://kotlin-toolchain.org/
+product:
+  # This is a Kotlin Multiplatform Library for Majority Judgment
+  type: kmp/lib
+  # Add more platforms here as needed (but test them, first!)
+  platforms:
+    - jvm
+    - android
+    #- androidNativeX64
+    #- androidNativeX86
+    #- linuxX64
+    #- linuxArm64
+    #- androidNativeArm32
+    #- androidNativeArm64
+    #- iosX64
+    #- iosArm64
+    #- iosSimulatorArm64
+    #- macosX64
+    #- macosArm64
+    #- tvosArm64
+    #- tvosSimulatorArm64
+    #- tvosX64
+    #- watchosArm32
+    #- watchosArm64
+    #- watchosDeviceArm64
+    #- watchosX64
+    #- watchosSimulatorArm64
+    #- mingwX64
+    #- wasmJs
+    #- wasmWasi
+
+# I was very wary of adding *any* dependency to this library, but in the end it makes sense.
+# We probably should not have any other dependency here than large number support.
+dependencies:
+  # We actually want Big Numbers support for two different reasons:
+  # 1. Tally Normalization using the Least Common Multiple (LCM grows fast with primes) — perfect normalization
+  # 2. Scalar Majority Merit (easily goes to ~60 decimal places) — it's useful for proportional representation
+  - 'com.ionspin.kotlin:bignum:0.3.10':
+      exported: true
+      scope: all
