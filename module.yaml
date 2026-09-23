@@ -39,3 +39,9 @@ dependencies:
   - 'com.ionspin.kotlin:bignum:0.3.10':
       exported: true
       scope: all
+
+test-dependencies:
+  - $kotlin.test
+  - $kotlin.test.junit5
+  # This gets us the @ParameterizedTest goodies
+  - 'org.junit.jupiter:junit-jupiter-params:5.1.0'
