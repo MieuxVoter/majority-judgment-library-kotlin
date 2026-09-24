@@ -48,8 +48,7 @@ val mj = MajorityJudgment()
 ```
 
 > [!TIP]
-> Got more than 2³² judges?  Use `Long`s.
-> 
+> Got more than 2³² voters?  Use `Long`s.
 > Got even more than that ?  Use `BigInteger`s !
 
 
