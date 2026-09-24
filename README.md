@@ -29,7 +29,7 @@ Collect the **tallies** for each candidate by your own means,
 provide them to `MajorityJudgment.deliberate()`, and get back the **rank** of each candidate,
 with some additional analysis data.
 
-Let's say you have the following tally, in a poll with 18 voters:
+Let's say you have the following tally, from a poll with 18 voters:
 
 |            | To Reject | Poor | Passable | Somewhat Good | Good | Very Good | Excellent |
 |------------|-----------|------|----------|---------------|------|-----------|-----------|
@@ -44,11 +44,21 @@ Let's say you have the following tally, in a poll with 18 voters:
 
 ```kotlin
 val mj = MajorityJudgment()
-// TODO
+val tally = PollTally(
+    candidatesTallies = listOf(
+        CandidateTally(gradesTallies = arrayOf(4, 5, 2, 1, 3, 1, 2)),
+        CandidateTally(gradesTallies = arrayOf(3, 6, 2, 2, 2, 1, 2)),
+        CandidateTally(gradesTallies = arrayOf(5, 3, 0, 2, 3, 2, 3)),
+    ),
+)
+val result = mj.deliberate(tally)
+
+print(result.candidateResults.map { it.rank }) // [ 2, 3, 1 ]
+print(result.candidateResultsRanked.map { it.index }) // [ 2, 0, 1 ]
 ```
 
 > [!TIP]
-> Got more than 2³² voters?  Use `Long`s.
+> Got more than 2³² voters?  Use `Long`s. \
 > Got even more than that ?  Use `BigInteger`s !
 
 
