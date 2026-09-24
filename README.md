@@ -9,7 +9,7 @@
 > [!WARNING]
 > This is a work in progress ; no release has been made yet.
 
-Test-driven kotlin library to help deliberate (rank candidates) using [Majority Judgment](https://mieuxvoter.fr/index.php/decouvrir/?lang=en).
+Test-driven Kotlin library to help deliberate (rank candidates) using [Majority Judgment](https://mieuxvoter.fr/index.php/decouvrir/?lang=en).
 
 The goal is to be **scalable**, **reliable**, fast and extensible.
 
