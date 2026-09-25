@@ -9,7 +9,7 @@ import com.ionspin.kotlin.bignum.integer.BigInteger
  *
  * Make sure to only process candidates tallies with at least one judgment.
  */
-data class NormalizedBalancedPollTally(
+data class NormalizationBalancedPollTally(
     override val candidatesTallies: List<CandidateTallyInterface>,
 
     /**

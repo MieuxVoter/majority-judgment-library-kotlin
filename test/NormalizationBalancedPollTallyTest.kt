@@ -3,7 +3,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertContentEquals
 
-class NormalizedBalancedPollTallyTest {
+class NormalizationBalancedPollTallyTest {
 
     data class ScaleNormalizationTestDatum(
         val rule: String,
@@ -84,7 +84,7 @@ class NormalizedBalancedPollTallyTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("getData")
     fun testScaleNormalization(datum: ScaleNormalizationTestDatum) {
-        val tally = NormalizedBalancedPollTally(
+        val tally = NormalizationBalancedPollTally(
             candidatesTallies = datum.tallies.map {
                 CandidateTally(gradesTallies = it)
             },

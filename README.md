@@ -15,12 +15,12 @@ The goal is to be **scalable**, **reliable**, fast and extensible.
 
 ## Features
 
+- [x] Super-fast
 - [x] Supports billions of voters
 - [x] Supports millions of candidates
-- [ ] Handles default grades (static or normalized) (TODO)
+- [x] Handles default grades (static or normalized)
 - [x] No floating-point arithmetic used in ranking
 - [x] Room for other deliberation resolvers (central, usual)
-- [x] Computes a scalar majority merit for candidates that can be used for proportional representation
 
 
 ## Example Usage
@@ -68,41 +68,39 @@ Sometimes, depending on how you've set up your poll, some candidates may receive
 
 Majority Judgment only works if the merit profiles are *balanced*, that is holding the same total amount of judgments.
 
+### Balancing using the lowest grade
 
+This balancing strategy — using the lowest grade as the default grade — is recommended for most polls.
 
+It incentivizes candidates to be clear, and to promote themselves.
 
-<!--
+```kotlin
+val mj = MajorityJudgment()
+val tally = StaticDefaultBalancedPollTally(
+    candidatesTallies = listOf(
+        CandidateTally(gradesTallies = arrayOf(1, 2, 3, 4)),
+        CandidateTally(gradesTallies = arrayOf(0, 0, 3, 4)),
+    ),
+)
 
-### Using a static default grade
+println(tally.candidatesTallies[1]) // [ 3, 0, 3, 4 ]
 
-Want to set a static default grade ?  Use a `StaticDefaultTally` instead of a `Tally`.
+assertContentEquals(
+    expected = arrayOf(3, 0, 3, 4).map { BigInteger.fromInt(it) }.toTypedArray(),
+    actual = tally.candidatesTallies[1].gradesTallies,
+    message = "Correct ranks",
+)
 
-```java
-Integer amountOfJudges = 18;
-Integer defaultGrade = 0;  // "worst" grade (usually "to reject")
-TallyInterface tally = new StaticDefaultTally(new ProposalTallyInterface[] {
-        // Amounts of judgments received of each grade, from "worst" grade to "best" grade
-        new ProposalTally(new Integer[]{4, 5, 2, 1, 3, 1, 2}),  // Proposal A
-        new ProposalTally(new Integer[]{3, 6, 2, 1, 3, 1, 2}),  // Proposal B
-        // …
-}, amountOfJudges, defaultGrade);
+val result = mj.deliberate(tally)
+
+println(result.candidateResults.map { it.rank }) // [ 1, 2 ]
+println(result.candidateResultsRanked.map { it.index }) // [ 0, 1 ]
 ```
 
 
-### Using normalized tallies
+### Balancing using normalization
 
-In some polls with a very high amount of proposals, where participants cannot be expected to judge every last one of them, it may make sense to normalize the tallies instead of using a default grade.
-
----
-
-> TODO
-
----
-
-> This normalization uses the Least Common Multiple, in order to skip floating-point arithmetic.
-
--->
-
+> TODO: explain it here (it's already coded, see `NormalizationBalancedPollTally`)
 
 
 ## Run the test-suite

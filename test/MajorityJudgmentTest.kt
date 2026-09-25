@@ -241,6 +241,41 @@ class MajorityJudgmentTest {
     }
 
     @Test
+    fun testDefaultGradeReadmeExample() {
+        val mj = MajorityJudgment()
+        val tally = StaticDefaultBalancedPollTally(
+            candidatesTallies = listOf(
+                CandidateTally(gradesTallies = arrayOf(1, 2, 3, 4)),
+                CandidateTally(gradesTallies = arrayOf(0, 0, 3, 4)),
+            ),
+        )
+
+        //println(tally.candidatesTallies[1]) // [ 3, 0, 3, 4 ]
+
+        assertContentEquals(
+            expected = arrayOf(3, 0, 3, 4).map { BigInteger.fromInt(it) }.toTypedArray(),
+            actual = tally.candidatesTallies[1].gradesTallies,
+            message = "Correct ranks",
+        )
+
+        val result = mj.deliberate(tally)
+
+        //println(result.candidateResults.map { it.rank }) // [ 1, 2 ]
+        //println(result.candidateResultsRanked.map { it.index }) // [ 0, 1 ]
+
+        assertContentEquals(
+            expected = arrayOf(1, 2),
+            actual = result.candidateResults.map { it.rank }.toTypedArray(),
+            message = "Correct ranks",
+        )
+        assertContentEquals(
+            expected = arrayOf(0, 1),
+            actual = result.candidateResultsRanked.map { it.index }.toTypedArray(),
+            message = "Correct indices",
+        )
+    }
+
+    @Test
     fun testSimpleExampleWithBigIntegers() {
         val meritProfiles = listOf(
             // Arancini
