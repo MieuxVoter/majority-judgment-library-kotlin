@@ -62,6 +62,14 @@ print(result.candidateResultsRanked.map { it.index }) // [ 2, 0, 1 ]
 > Got even more than that ?  Use `BigInteger`s !
 
 
+## Balancing
+
+Sometimes, depending on how you've set up your poll, some candidates may receive more judgments than others.
+
+Majority Judgment only works if the merit profiles are *balanced*, that is holding the same total amount of judgments.
+
+
+
 
 <!--
 

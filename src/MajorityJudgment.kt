@@ -158,7 +158,7 @@ class MajorityJudgment(
             throw IncoherentTallyException()
         }
         if (!isTallyBalanced(tally)) {
-            throw UnbalancedTallyException()
+            throw UnbalancedTallyException(tally)
         }
     }
 
