@@ -144,7 +144,7 @@ class CandidateTallyAnalysis {
         )
 
         val amountOfGrades = tally.gradesTallies.size
-        for (cursor in 1..<amountOfGrades) {
+        repeat(amountOfGrades - 1) {
             analysis.reanalyze(currentTally, favorContestation)
 
             var type = ParticipantGroup.Type.Median
