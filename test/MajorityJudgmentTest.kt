@@ -250,7 +250,7 @@ class MajorityJudgmentTest {
             ),
         )
 
-        //println(tally.candidatesTallies[1]) // [ 3, 0, 3, 4 ]
+        //println(tally.candidatesTallies[1].gradesTallies) // [ 3, 0, 3, 4 ]
 
         assertContentEquals(
             expected = arrayOf(3, 0, 3, 4).map { BigInteger.fromInt(it) }.toTypedArray(),
@@ -270,6 +270,52 @@ class MajorityJudgmentTest {
         )
         assertContentEquals(
             expected = arrayOf(0, 1),
+            actual = result.candidateResultsRanked.map { it.index }.toTypedArray(),
+            message = "Correct indices",
+        )
+    }
+
+    @Test
+    fun testNormalizationReadmeExample() {
+        val mj = MajorityJudgment()
+        val tally = NormalizationBalancedPollTally(
+            candidatesTallies = listOf(
+                CandidateTally(gradesTallies = arrayOf(1, 2, 3, 4, 5)), // 15 judgments total
+                CandidateTally(gradesTallies = arrayOf(1, 1, 1, 1, 1)), //  5 judgments only
+                CandidateTally(gradesTallies = arrayOf(1, 1, 0, 0, 1)), //  3 judgments only
+            ),
+        )
+
+        // Now the candidates' tallies are balanced
+        println(tally.candidatesTallies[0].gradesTallies.contentToString()) // [1, 2, 3, 4, 5]
+        println(tally.candidatesTallies[1].gradesTallies.contentToString()) // [3, 3, 3, 3, 3]
+        println(tally.candidatesTallies[2].gradesTallies.contentToString()) // [5, 5, 0, 0, 5]
+
+        assertContentEquals(
+            expected = arrayOf(1, 2, 3, 4, 5).map { BigInteger.fromInt(it) }.toTypedArray(),
+            actual = tally.candidatesTallies[0].gradesTallies,
+        )
+        assertContentEquals(
+            expected = arrayOf(3, 3, 3, 3, 3).map { BigInteger.fromInt(it) }.toTypedArray(),
+            actual = tally.candidatesTallies[1].gradesTallies,
+        )
+        assertContentEquals(
+            expected = arrayOf(5, 5, 0, 0, 5).map { BigInteger.fromInt(it) }.toTypedArray(),
+            actual = tally.candidatesTallies[2].gradesTallies,
+        )
+
+        val result = mj.deliberate(tally)
+
+        println(result.candidateResults.map { it.rank }) // [1, 2, 3]
+        println(result.candidateResultsRanked.map { it.index }) // [0, 1, 2]
+
+        assertContentEquals(
+            expected = arrayOf(1, 2, 3),
+            actual = result.candidateResults.map { it.rank }.toTypedArray(),
+            message = "Correct ranks",
+        )
+        assertContentEquals(
+            expected = arrayOf(0, 1, 2),
             actual = result.candidateResultsRanked.map { it.index }.toTypedArray(),
             message = "Correct indices",
         )
