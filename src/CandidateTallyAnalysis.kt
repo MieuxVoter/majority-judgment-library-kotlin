@@ -73,7 +73,9 @@ class CandidateTallyAnalysis {
         } else {
             2
         }
-        val medianCursor = (this.totalSize.add(BigInteger.fromInt(medianOffset)).divide(BigInteger.TWO))
+        val medianCursor = this.totalSize
+            .add(BigInteger.fromInt(medianOffset))
+            .divide(BigInteger.TWO)
 
         var tallyBeforeCursor: BigInteger
         var tallyCursor = BigInteger.ZERO
@@ -89,8 +91,9 @@ class CandidateTallyAnalysis {
                     this.medianGrade = grade
                     this.contestationGroupSize = tallyBeforeCursor
                     this.medianGroupSize = gradeTally
-                    this.adhesionGroupSize =
-                        (this.totalSize.subtract(this.contestationGroupSize).subtract(this.medianGroupSize))
+                    this.adhesionGroupSize = this.totalSize
+                        .subtract(this.contestationGroupSize)
+                        .subtract(this.medianGroupSize)
                 } else {
                     if (0 < gradeTally.compareTo(BigInteger.ZERO)) { // 0 < gradeTally
                         this.contestationGrade = grade

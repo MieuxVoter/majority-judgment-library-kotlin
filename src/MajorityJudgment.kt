@@ -281,6 +281,6 @@ class MajorityJudgment(
             amountOfJudges.longValue(exactRequired = false),
         )
 
-        return (1.0 - rankNormalized)
+        return 1.0 - rankNormalized
     }
 }
