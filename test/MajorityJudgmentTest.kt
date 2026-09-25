@@ -13,7 +13,8 @@ class MajorityJudgmentTest {
         val rule: String,
         val meritProfiles: List<List<Int>>,
         val staticDefaultGrade: Int? = null,
-        val expectedRanks: Array<Int>? = null,
+        val medianDefaultGrade: Boolean = false,
+        val expectedRanks: List<Int>? = null,
         val expectedException: KClass<*>? = null,
     ) {
         override fun toString(): String {
@@ -51,11 +52,16 @@ class MajorityJudgmentTest {
                     expectedException = IncoherentTallyException::class,
                 ),
                 MajorityJudgmentTestDatum(
+                    rule = "Empty list in, empty list out",
+                    meritProfiles = listOf(),
+                    expectedRanks = listOf(),
+                ),
+                MajorityJudgmentTestDatum(
                     rule = "A single candidate is allowed",
                     meritProfiles = listOf(
                         listOf(0, 1, 2, 3, 4, 5, 6),
                     ),
-                    expectedRanks = arrayOf(
+                    expectedRanks = listOf(
                         1,
                     ),
                 ),
@@ -65,7 +71,7 @@ class MajorityJudgmentTest {
                         listOf(11, 2, 7),
                         listOf(10, 4, 6),
                     ),
-                    expectedRanks = arrayOf(
+                    expectedRanks = listOf(
                         2,
                         1,
                     ),
@@ -77,7 +83,7 @@ class MajorityJudgmentTest {
                         listOf(20, 35, 35, 40, 20),
                         listOf(25, 35, 30, 40, 20),
                     ),
-                    expectedRanks = arrayOf(
+                    expectedRanks = listOf(
                         3,
                         1,
                         2,
@@ -90,7 +96,7 @@ class MajorityJudgmentTest {
                         listOf(30_000_000, 10_111_000, 5_000_222),
                         listOf(5_000_000, 15_111_000, 25_000_222),
                     ),
-                    expectedRanks = arrayOf(
+                    expectedRanks = listOf(
                         2,
                         3,
                         1,
@@ -104,7 +110,7 @@ class MajorityJudgmentTest {
                         listOf(150, 150, 0, 600, 600),
                         listOf(350, 250, 350, 250, 300),
                     ),
-                    expectedRanks = arrayOf(
+                    expectedRanks = listOf(
                         3,
                         1,
                         1,
@@ -121,7 +127,7 @@ class MajorityJudgmentTest {
                         listOf(0, 0, 0),
                     ),
                     staticDefaultGrade = 0,
-                    expectedRanks = arrayOf(
+                    expectedRanks = listOf(
                         1,
                         2,
                         3,
@@ -129,7 +135,24 @@ class MajorityJudgmentTest {
                         5,
                     ),
                 ),
-
+                MajorityJudgmentTestDatum(
+                    rule = "Balance with default median grade",
+                    meritProfiles = listOf(
+                        listOf(0, 0, 3),
+                        listOf(0, 2, 1),
+                        listOf(0, 0, 1),
+                        listOf(0, 1, 0),
+                        listOf(0, 0, 0),
+                    ),
+                    medianDefaultGrade = true,
+                    expectedRanks = listOf(
+                        1,
+                        3,
+                        1,
+                        4,
+                        5,
+                    ),
+                ),
             )
         }
     }
@@ -148,6 +171,12 @@ class MajorityJudgmentTest {
             pollTally = StaticDefaultBalancedPollTally(
                 candidatesTallies = pollTally.candidatesTallies,
                 defaultGrade = datum.staticDefaultGrade,
+            )
+        }
+
+        if (datum.medianDefaultGrade) {
+            pollTally = MedianDefaultBalancedPollTally(
+                candidatesTallies = pollTally.candidatesTallies,
             )
         }
 
@@ -177,7 +206,7 @@ class MajorityJudgmentTest {
 
         if (datum.expectedRanks != null) {
             assertContentEquals(
-                expected = datum.expectedRanks,
+                expected = datum.expectedRanks.toTypedArray(),
                 actual = pollResult.candidateResults.map { it.rank }.toTypedArray(),
                 message = "ranks are not as expected",
             )
@@ -196,8 +225,8 @@ class MajorityJudgmentTest {
         )
         val result = mj.deliberate(tally)
 
-        println(result.candidateResults.map { it.rank }) // [ 2, 3, 1 ]
-        println(result.candidateResultsRanked.map { it.index }) // [ 2, 0, 1 ]
+        //println(result.candidateResults.map { it.rank }) // [ 2, 3, 1 ]
+        //println(result.candidateResultsRanked.map { it.index }) // [ 2, 0, 1 ]
         
         assertContentEquals(
             expected = arrayOf(2, 3, 1),
