@@ -22,7 +22,7 @@ class MajorityJudgmentTest {
         }
     }
 
-    // To use the getData data provider method into @MethodSource it has to be static.
+    // To use the getData data provider method into @MethodSource it has to be static, hence this companion.
     companion object {
         @JvmStatic
         fun getData(): List<MajorityJudgmentTestDatum> {
