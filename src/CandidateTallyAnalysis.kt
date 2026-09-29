@@ -39,12 +39,19 @@ class CandidateTallyAnalysis {
     var secondMedianGroupSign: Int = 0 // -1 for contestation, +1 for adhesion, 0 for empty group size
         private set
 
+    var deepMajorityGauge: DeepMajorityGauge? = null
+        private set
+
     constructor(
         tally: CandidateTallyInterface,
         favorContestation: Boolean = true,
+        deep: Boolean = true,
     ) {
         this.tally = tally
         reanalyze(tally, favorContestation)
+        if (deep) {
+            performDeepAnalysis(favorContestation)
+        }
     }
 
     fun reanalyze(
@@ -129,6 +136,32 @@ class CandidateTallyAnalysis {
         }
     }
 
+    private fun performDeepAnalysis(
+        favorContestation: Boolean = true,
+    ) {
+        val currentTally = WorkingCandidateTally(gradesTallies = this.tally.gradesTallies.copyOf())
+        this.deepMajorityGauge = DeepMajorityGauge(gauges = buildList {
+            repeat(times = currentTally.gradesTallies.size) {
+                val analysis = CandidateTallyAnalysis(
+                    tally = currentTally,
+                    favorContestation = favorContestation,
+                    deep = false,
+                )
+                add(
+                    MajorityGauge(
+                        medianGrade = analysis.medianGrade,
+                        biggestOutsideGroupSignedSize = analysis.secondMedianGroupSize
+                            .multiply(BigInteger.fromInt(analysis.secondMedianGroupSign)),
+                    )
+                )
+                currentTally.moveJudgments(
+                    fromGrade = analysis.medianGrade,
+                    intoGrade = analysis.secondMedianGrade,
+                )
+            }
+        })
+    }
+
     fun computeResolution(
         tally: CandidateTallyInterface,
         favorContestation: Boolean = true,
@@ -162,7 +195,10 @@ class CandidateTallyAnalysis {
                 )
             }
 
-            currentTally.moveJudgments(analysis.medianGrade, analysis.secondMedianGrade)
+            currentTally.moveJudgments(
+                fromGrade = analysis.medianGrade,
+                intoGrade = analysis.secondMedianGrade,
+            )
         }
 
         return participantGroups.toTypedArray<ParticipantGroup>()

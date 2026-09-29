@@ -202,9 +202,12 @@ class MajorityJudgment(
 
     /**
      * Computes a scalar majority merit for a given merit profile.
+     *
      * This merit is isomorphic with MJ ranking and is used for ranking. (bigger is better)
-     * Such a scalar merit is also handy for deriving a proportional representation for example.
-     * For lack of a better name, I call this a "signed base" technique.  The base is the amount of judges.
+     * Such a scalar merit is also handy for deriving a proportional representation, for example.
+     * It's also handy to approximate the "absolute rank" of a merit profile.
+     *
+     * For lack of a better name, I call this algo a "signed base" technique.  The base is the amount of judges.
      * Of course, we represent the merit in base 10, but intrinsically it's base amountOfJudges.
      */
     private fun computeMerit(
