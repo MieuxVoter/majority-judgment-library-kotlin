@@ -30,7 +30,7 @@ Let's say you have the following tally, from a poll with 18 voters:
 
 |            | To Reject | Poor | Passable | Somewhat Good | Good | Very Good | Excellent |
 |------------|-----------|------|----------|---------------|------|-----------|-----------|
-| Arancini   |     4     |   5  |     2    |       1       |   3  |     1     |     2     |
+| Arancini   |     4     |   4  |     3    |       1       |   3  |     1     |     2     |
 | Burger     |     3     |   6  |     2    |       2       |   2  |     1     |     2     |
 | Chips      |     5     |   3  |     0    |       2       |   3  |     2     |     3     |
 |     …      |           |      |          |               |      |           |           |
@@ -39,11 +39,13 @@ Let's say you have the following tally, from a poll with 18 voters:
 > The values in the table are the amount of judgments received per grade, by each candidate.
 > They are entirely fabricated for the purpose of this example and do not reflect reality.
 
+![Example merit profile with three candidates](docs/merit-example.svg)
+
 ```kotlin
 val mj = MajorityJudgment()
 val tally = PollTally(
     candidatesTallies = listOf(
-        CandidateTally(gradesTallies = arrayOf(4, 5, 2, 1, 3, 1, 2)),
+        CandidateTally(gradesTallies = arrayOf(4, 4, 3, 1, 3, 1, 2)),
         CandidateTally(gradesTallies = arrayOf(3, 6, 2, 2, 2, 1, 2)),
         CandidateTally(gradesTallies = arrayOf(5, 3, 0, 2, 3, 2, 3)),
     ),
@@ -54,9 +56,10 @@ print(result.candidateResults.map { it.rank }) // [ 2, 3, 1 ]
 print(result.candidateResultsRanked.map { it.index }) // [ 2, 0, 1 ]
 ```
 
+![Example merit profiles of three ranked candidates](docs/merit-example-ranked.svg)
+
 > [!TIP]
-> Got more than 2³² voters?  Use `Long`s. \
-> Got even more than that ?  Use `BigInteger`s !
+> The images of the merit profiles were generated using our [online merit profile generator](https://educ.mieuxvoter.fr).
 
 
 ## Balancing
