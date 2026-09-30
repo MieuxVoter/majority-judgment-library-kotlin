@@ -42,6 +42,9 @@ class CandidateTallyAnalysis {
     var deepMajorityGauge: DeepMajorityGauge? = null
         private set
 
+    var merit: BigInteger = BigInteger.ZERO
+        private set
+
     constructor(
         tally: CandidateTallyInterface,
         favorContestation: Boolean = true,
@@ -139,14 +142,25 @@ class CandidateTallyAnalysis {
     private fun performDeepAnalysis(
         favorContestation: Boolean = true,
     ) {
+        // We use a working copy so we can mutate it safely without affecting the original.
         val currentTally = WorkingCandidateTally(gradesTallies = this.tally.gradesTallies.copyOf())
+        val startingGrade = this.medianGrade
         this.deepMajorityGauge = DeepMajorityGauge(gauges = buildList {
-            repeat(times = currentTally.gradesTallies.size) {
+
+            // We use a cursor because we want to iterate over all grades, including the ones with no judgments.
+            // We do not need to this to be able to sort candidates (repainting into the second median would work)
+            // but we DO need to do this to compute the scalar majority merit later on from the deep majority gauge.
+            var cursorGrade = startingGrade
+            var minProcessedGrade = cursorGrade
+            var maxProcessedGrade = cursorGrade
+
+            repeat(times = currentTally.gradesTallies.size - 1) {
                 val analysis = CandidateTallyAnalysis(
                     tally = currentTally,
                     favorContestation = favorContestation,
                     deep = false,
                 )
+
                 add(
                     MajorityGauge(
                         medianGrade = analysis.medianGrade,
@@ -154,15 +168,49 @@ class CandidateTallyAnalysis {
                             .multiply(BigInteger.fromInt(analysis.secondMedianGroupSign)),
                     )
                 )
+
+                if (analysis.secondMedianGroupSign > 0) {
+                    cursorGrade = maxProcessedGrade + 1
+                    maxProcessedGrade = cursorGrade
+                } else if (analysis.secondMedianGroupSign < 0) {
+                    cursorGrade = minProcessedGrade - 1
+                    minProcessedGrade = cursorGrade
+                }
+
                 currentTally.moveJudgments(
                     fromGrade = analysis.medianGrade,
-                    intoGrade = analysis.secondMedianGrade,
+                    intoGrade = cursorGrade,
                 )
             }
         })
+        this.merit = computeScalarMerit()
     }
 
-    fun computeResolution(
+    /**
+     * Computes a scalar majority merit for a given merit profile.
+     *
+     * This merit is isomorphic with MJ ranking and is used for ranking. (bigger is better)
+     * Such a scalar merit is also handy for deriving a proportional representation, for example.
+     * It's also a good way to approximate the "absolute rank" of a merit profile.
+     *
+     * For lack of a better name, I call this algo a "signed base" technique.  The base is the amount of voters.
+     * Of course, we represent the merit in base 10, but intrinsically it's base amountOfVoters.
+     */
+    private fun computeScalarMerit(): BigInteger {
+        require(this.deepMajorityGauge != null) { "Perform a deep analysis first." }
+        val amountOfVoters = tally.gradesTallies.sumOf { it }
+
+        var merit = BigInteger.fromInt(this.medianGrade)
+        this.deepMajorityGauge!!.gauges.forEach { gauge ->
+            merit *= amountOfVoters
+            merit += gauge.biggestOutsideGroupSignedSize
+        }
+
+        return merit
+    }
+
+    // TBD: for later
+    private fun computeResolution(
         tally: CandidateTallyInterface,
         favorContestation: Boolean = true,
     ): Array<ParticipantGroup> {

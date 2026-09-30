@@ -46,8 +46,9 @@ class MajorityJudgment(
             BigInteger.ZERO
         }
 
-        // I Compute the scalar majority merit of each candidate
-        val merits = tally.candidatesTallies.map { computeMerit(tally = it, favorContestation) }
+        // I Analyze and compute the scalar majority merit of each candidate
+        val analyses = tally.candidatesTallies.map { CandidateTallyAnalysis(tally = it, favorContestation) }
+        val merits = analyses.map { it.merit }
         val sumOfMerits = merits.sumOf { it }
 
         // II.a Compute the (maximum!) merit a 100% EXCELLENT candidate would get
@@ -57,10 +58,11 @@ class MajorityJudgment(
             val amountOfJudges = countJudgments(tally.candidatesTallies[0])
             val bestMeritProfile = Array(size = amountOfGrades) { BigInteger.ZERO }
             bestMeritProfile[bestMeritProfile.size - 1] = amountOfJudges
-            computeMerit(
+            val analysis = CandidateTallyAnalysis(
                 tally = CandidateTally(gradesTallies = bestMeritProfile),
                 favorContestation = favorContestation,
             )
+            analysis.merit
         } else {
             BigInteger.ONE // a dummy is OK, it's never going to be used
         }
@@ -78,13 +80,12 @@ class MajorityJudgment(
 
         // III. Prepare the results for each candidate (except the rank)
         val candidateResults = Array(size = amountOfCandidates) { candidateIndex ->
-            val candidateTally = tally.candidatesTallies[candidateIndex]
-            val analysis = CandidateTallyAnalysis(candidateTally, this.favorContestation)
+            val analysis = analyses[candidateIndex]
 
             CandidateResult(
                 index = candidateIndex,
                 rank = 0, // computed later, after the sorting step
-                merit = merits[candidateIndex],
+                merit = analysis.merit,
                 relativeMerit = if (sumOfMerits != BigInteger.ZERO) {
                     BigDecimal.fromBigInteger(merits[candidateIndex])
                         .divide(
@@ -198,56 +199,6 @@ class MajorityJudgment(
 
     private fun countJudgments(tally: CandidateTallyInterface): BigInteger {
         return tally.gradesTallies.sumOf { it }
-    }
-
-    /**
-     * Computes a scalar majority merit for a given merit profile.
-     *
-     * This merit is isomorphic with MJ ranking and is used for ranking. (bigger is better)
-     * Such a scalar merit is also handy for deriving a proportional representation, for example.
-     * It's also handy to approximate the "absolute rank" of a merit profile.
-     *
-     * For lack of a better name, I call this algo a "signed base" technique.  The base is the amount of judges.
-     * Of course, we represent the merit in base 10, but intrinsically it's base amountOfJudges.
-     */
-    private fun computeMerit(
-        tally: CandidateTallyInterface,
-        favorContestation: Boolean = true,
-    ): BigInteger {
-        val analysis = CandidateTallyAnalysis(tally, favorContestation)
-
-        val amountOfGrades = countGrades(tally)
-        val amountOfJudges = countJudgments(tally)
-
-        val currentTally = WorkingCandidateTally(gradesTallies = tally.gradesTallies.copyOf())
-
-        var merit = BigInteger.fromInt(analysis.medianGrade)
-        var cursorGrade = analysis.medianGrade
-        var minProcessedGrade = cursorGrade
-        var maxProcessedGrade = cursorGrade
-
-        repeat(times = amountOfGrades - 1) {
-            merit *= amountOfJudges
-
-            if (analysis.secondMedianGroupSize == BigInteger.ZERO) {
-                return@repeat // a.k.a. continue
-            }
-
-            if (analysis.secondMedianGroupSign > 0) {
-                cursorGrade = maxProcessedGrade + 1
-                maxProcessedGrade = cursorGrade
-            } else {
-                cursorGrade = minProcessedGrade - 1
-                minProcessedGrade = cursorGrade
-            }
-
-            merit += analysis.secondMedianGroupSize * analysis.secondMedianGroupSign
-
-            currentTally.moveJudgments(fromGrade = analysis.medianGrade, intoGrade = cursorGrade)
-            analysis.reanalyze(currentTally, favorContestation)
-        }
-
-        return merit
     }
 
     /**
