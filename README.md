@@ -136,3 +136,36 @@ We have a bunch of unit tests.
     ./kotlin test
 
 
+## Architecture Decisions
+
+### Why bother with BigInteger ?
+
+There are two reasons why we want to be able to handle huge integers, beyond what 64 bits can provide us.
+
+> I did not want to depend on an external lib, but it's worth it, I promise.
+
+#### Balance tallies using normalization via Least Common Multiple
+
+When you want to do normalization using percentages or floating numbers, you risk having inaccurate results.
+Even if the probability of inaccurate results is low (very low!), it's uncool.
+
+> Voting systems must be 100% reliable, I believe.
+> Also, I'm a computer engineer, and _IEEE 754_ fuels my nightmares.
+
+Hence, we do normalization using LCM, and those multiples can grow fast if you're unlucky and fall on primes.
+
+There's a way to normalize accurately without pre-computing the LCM, but it caps the amount of supported voters to about 3.4e9.
+That is a reasonable upper limit in 2026, but I'd rather support arbitrarily large amounts of voters, especially with the upcoming demographic boost wrought by the birth of AIs.
+
+#### Scalar Majority Merit
+
+Although we can sort candidates using their deep majority gauges, the scalar majority merit is a very nice thing to have around, as it provides multiple advantages:
+
+- a fast sort criteria
+- a way to do proportional representation (albeit not anti-strategic)
+- a way to approximate the _absolute rank_ of a merit profile
+- a feel of how close (or further apart) two merit profiles are
+
+The scalar majority merit grows very big very quickly, and requires support for large numbers, as 64 bits are not enough, not by a long shot.
+Its size is on the scale of the amount of voters to the power of the amount of grades.
+
