@@ -13,11 +13,11 @@ The goal is to be **scalable**, **reliable**, fast and extensible.
 ## Features
 
 - [x] Super-fast
-- [x] Supports billions of voters
+- [x] Supports trillions of voters
 - [x] Supports millions of candidates
-- [x] Handles default grades (static or normalized)
-- [x] No floating-point arithmetic used in ranking
-- [x] Room for other deliberation resolvers (central, usual)
+- [x] Handles default grades _(static or normalized)_
+- [x] No floating-point arithmetic _(100% accurate)_
+- [x] Room for other deliberation resolvers _(central, usual)_
 
 
 ## Example Usage
@@ -161,10 +161,10 @@ That is a reasonable upper limit in 2026, but I'd rather support arbitrarily lar
 
 Although we can sort candidates using their deep majority gauges, the scalar majority merit is a very nice thing to have around, as it provides multiple advantages:
 
-- a fast sort criteria
+- a fast sort criteria (there are others, though)
 - a way to do proportional representation (albeit not anti-strategic)
 - a way to approximate the _absolute rank_ of a merit profile
-- a feel of how close (or further apart) two merit profiles are
+- a quantitative feel of how close (or further apart) two merit profiles are
 
 The scalar majority merit grows very big very quickly, and requires support for large numbers, as 64 bits are not enough, not by a long shot.
 Its size is on the scale of the amount of voters to the power of the amount of grades.
