@@ -1,4 +1,4 @@
-
+package exception
 /**
  * Raised when the provided tally holds negative values, or disparate amounts of grades.
  */
@@ -11,4 +11,12 @@ internal class IncoherentTallyException : InvalidTallyException() {
                 append(super.message)
             }
         }
+
+    override fun equals(other: Any?): Boolean {
+        return this === other
+    }
+
+    override fun hashCode(): Int {
+        return System.identityHashCode(this)
+    }
 }

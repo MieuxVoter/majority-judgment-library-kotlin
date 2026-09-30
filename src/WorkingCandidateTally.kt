@@ -1,5 +1,8 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
+/**
+ * Mutable candidate tally that we use internally in the recursive (deep) analysis.
+ */
 internal class WorkingCandidateTally(
     override val gradesTallies: Array<BigInteger>,
 ) : CandidateTallyInterface {

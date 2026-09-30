@@ -1,4 +1,6 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import exception.IncoherentTallyException
+import exception.UnbalancedTallyException
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.reflect.KClass

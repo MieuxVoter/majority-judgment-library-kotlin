@@ -91,7 +91,7 @@ data class NormalizationBalancedPollTally(
     companion object {
         /**
          * Least Common Multiple.
-         * http://en.wikipedia.org/wiki/Least_common_multiple
+         * https://en.wikipedia.org/wiki/Least_common_multiple
          *
          * Not added as extension since the BigInteger lib might add it itself at some point.
          * Perhaps we should, though, if only to be warned when they do, so we can remove this.

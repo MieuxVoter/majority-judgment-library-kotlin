@@ -6,6 +6,8 @@ import com.ionspin.kotlin.bignum.integer.BigInteger
  */
 class CandidateTallyAnalysis {
 
+    // I'm not keen on using 'var' with 'private set' ; refactor at will
+
     var tally: CandidateTallyInterface
         private set
 
@@ -139,6 +141,12 @@ class CandidateTallyAnalysis {
         }
     }
 
+    /**
+     * Recursive (deep) analysis of the candidate tally,
+     * yielding all the info we need to sort candidates without approximation or errors.
+     *
+     * This uses (shallow) [CandidateTallyAnalysis] internally.
+     */
     private fun performDeepAnalysis(
         favorContestation: Boolean = true,
     ) {
@@ -183,6 +191,7 @@ class CandidateTallyAnalysis {
                 )
             }
         })
+
         this.merit = computeScalarMerit()
     }
 
