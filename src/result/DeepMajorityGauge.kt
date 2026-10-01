@@ -1,3 +1,4 @@
+package result
 
 /**
  * This holds all the information we need to rank the candidates, without approximation.

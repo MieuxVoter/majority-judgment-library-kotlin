@@ -1,6 +1,6 @@
 package tally
 
-import CandidateTallyAnalysis
+import result.CandidateTallyAnalysis
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 /**

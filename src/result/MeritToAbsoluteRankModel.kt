@@ -1,3 +1,5 @@
+package result
+
 import kotlin.math.E
 import kotlin.math.pow
 import kotlin.math.sin
@@ -7,7 +9,7 @@ import kotlin.math.sin
  * It is used to approximate the "absolute rank" of a merit profile from its scalar majority merit.
  * What we call "absolute rank" is the rank of a merit profile in the MJ poll with ALL possible merit profiles.
  */
-class MeritToAbsoluteRankModel {
+internal class MeritToAbsoluteRankModel {
     /**
      * @param merit is expected to be normalized (between 0 and 1)
      * @return the approximation of the absolute rank, normalized

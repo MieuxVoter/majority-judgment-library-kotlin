@@ -1,3 +1,5 @@
+package result
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 data class ParticipantGroup(

@@ -6,6 +6,8 @@ import exception.IncoherentTallyException
 import exception.UnbalancedTallyException
 import extension.sumOf
 import result.CandidateResult
+import result.CandidateTallyAnalysis
+import result.MeritToAbsoluteRankModel
 import result.PollResult
 import result.PollResultInterface
 import tally.CandidateTally

@@ -1,6 +1,5 @@
 package result
 
-import CandidateTallyAnalysis
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 /**
