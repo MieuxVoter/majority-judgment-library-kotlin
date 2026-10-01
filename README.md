@@ -4,7 +4,7 @@
 [![Release](https://img.shields.io/github/v/release/MieuxVoter/majority-judgment-library-kotlin?sort=semver&style=for-the-badge)](https://github.com/MieuxVoter/majority-judgment-library-kotlin/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/MieuxVoter/majority-judgment-library-kotlin/build.yml?style=for-the-badge)](https://github.com/MieuxVoter/majority-judgment-library-kotlin/actions)
 [![Code Quality](https://img.shields.io/codefactor/grade/github/MieuxVoter/majority-judgment-library-kotlin?style=for-the-badge)](https://www.codefactor.io/repository/github/mieuxvoter/majority-judgment-library-kotlin)
-[![Join the Discord chat at https://discord.gg/k9YRuZPSZs](https://img.shields.io/discord/705322981102190593.svg?style=for-the-badge)](https://discord.gg/k9YRuZPSZs)
+[![Join the Discord chat at https://discord.mieuxvoter.fr](https://img.shields.io/discord/705322981102190593.svg?style=for-the-badge)](https://discord.mieuxvoter.fr)
 
 Test-driven Kotlin library to help deliberate (rank candidates) using [Majority Judgment](https://mieuxvoter.fr/index.php/decouvrir/?lang=en).
 
@@ -154,7 +154,7 @@ Even if the probability of inaccurate results is low (very low!), it's uncool.
 
 Hence, we do normalization using LCM, and those multiples can grow fast if you're unlucky and fall on primes.
 
-There's a way to normalize accurately without pre-computing the LCM, but it caps the amount of supported voters to about 3.4e9.
+There's a way to normalize accurately without pre-computing the LCM, but it caps the amount of supported voters to about 3e9.
 That is a reasonable upper limit in 2026, but I'd rather support arbitrarily large amounts of voters, especially with the upcoming demographic boost wrought by the birth of AIs.
 
 #### Scalar Majority Merit
