@@ -1,6 +1,7 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import tally.CandidateTally
 import tally.CandidateTallyInterface
+import tally.PollTallyInterface
 
 /**
  * A tally that can be filled judgment by judgment, using the [collect] method.

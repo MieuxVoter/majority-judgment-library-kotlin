@@ -7,6 +7,7 @@ import exception.UnbalancedTallyException
 import extension.sumOf
 import tally.CandidateTally
 import tally.CandidateTallyInterface
+import tally.PollTallyInterface
 
 /**
  * Deliberate (i.e. rank candidates) using Majority Judgment.

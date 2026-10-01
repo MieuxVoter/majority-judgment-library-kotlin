@@ -4,6 +4,7 @@ import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import extension.sumOf
 import tally.CandidateTallyInterface
+import tally.PollTallyInterface
 
 /**
  * Balanced poll tally using a scaled normalization.

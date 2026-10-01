@@ -6,7 +6,7 @@
 interface PollResultInterface {
     /**
      * List of [CandidateResult], in the order the [tally.CandidateTally]s were initially submitted
-     * in the input [PollTallyInterface.candidatesTallies].
+     * in the input [tally.PollTallyInterface.candidatesTallies].
      *
      * You can get the rank of each candidate by accessing [CandidateResult.rank].
      */

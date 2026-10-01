@@ -1,3 +1,4 @@
+import tally.PollTallyInterface
 
 /**
  * A deliberator takes in a poll's tally, which holds the amount of judgments of each grade received

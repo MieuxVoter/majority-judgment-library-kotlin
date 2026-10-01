@@ -4,6 +4,8 @@ import exception.UnbalancedTallyException
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import tally.CandidateTally
+import tally.PollTally
+import tally.PollTallyInterface
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertContentEquals

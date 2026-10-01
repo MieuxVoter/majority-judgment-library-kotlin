@@ -1,6 +1,6 @@
 package exception
 
-import PollTallyInterface
+import tally.PollTallyInterface
 import extension.sumOf
 
 /**

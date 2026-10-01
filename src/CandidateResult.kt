@@ -8,7 +8,7 @@ import com.ionspin.kotlin.bignum.integer.BigInteger
 data class CandidateResult(
 
     /**
-     * Index of the candidate, as submitted in the [PollTallyInterface.candidatesTallies] list.
+     * Index of the candidate, as submitted in the [tally.PollTallyInterface.candidatesTallies] list.
      * Each candidate therefore has a unique index, and indices start at 0.
      * This property is useful when iterating over [PollResult.candidateResultsRanked].
      */
