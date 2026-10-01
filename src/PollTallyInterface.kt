@@ -1,3 +1,4 @@
+import tally.CandidateTallyInterface
 
 /**
  * The main input of the Majority Judgment library.

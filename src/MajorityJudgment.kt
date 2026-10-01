@@ -4,6 +4,8 @@ import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import exception.IncoherentTallyException
 import exception.UnbalancedTallyException
+import tally.CandidateTally
+import tally.CandidateTallyInterface
 
 /**
  * Deliberate (i.e. rank candidates) using Majority Judgment.

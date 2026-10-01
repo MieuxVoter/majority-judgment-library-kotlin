@@ -1,4 +1,5 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import tally.CandidateTallyInterface
 
 /**
  * Collect useful data on a candidate's tally.

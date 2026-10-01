@@ -1,13 +1,14 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import tally.CandidateTallyInterface
 
 /**
  * Fill the missing judgments into the grade defined by [getDefaultGradeForCandidate].
  * This is an abstract class to dry code between static default grade and median default grade.
  */
-abstract class DefaultGradeTally: PollTallyInterface {
+abstract class DefaultGradePollTally : PollTallyInterface {
 
     /**
-     * Override this to choose the default grade for a given proposal.
+     * Override this to choose the default grade for a given candidate.
      */
     protected abstract fun getDefaultGradeForCandidate(candidateTally: CandidateTallyInterface): Int
 

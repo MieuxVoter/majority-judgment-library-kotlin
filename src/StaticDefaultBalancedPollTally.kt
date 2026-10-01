@@ -1,4 +1,5 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import tally.CandidateTallyInterface
 
 /**
  * Balanced poll tally using a static default grade.
@@ -26,12 +27,12 @@ data class StaticDefaultBalancedPollTally(
      * from the candidate that received the greatest amount of judgments.
      */
     val amountOfVoters: BigInteger? = null,
-) : PollTallyInterface, DefaultGradeTally() {
+) : PollTallyInterface, DefaultGradePollTally() {
 
     // TBD: I want alternative constructors, but … ambiguity !  Perhaps with Union Types ?
 
 //    constructor(
-//        candidatesTallies: List<CandidateTallyInterface>,
+//        candidatesTallies: List<tally.CandidateTallyInterface>,
 //        defaultGrade: Int = 0,
 //        amountOfVoters: Int? = null,
 //    ) : this(
@@ -44,7 +45,7 @@ data class StaticDefaultBalancedPollTally(
 //        },
 //    )
 //    constructor(
-//        candidatesTallies: List<CandidateTallyInterface>,
+//        candidatesTallies: List<tally.CandidateTallyInterface>,
 //        defaultGrade: Int = 0,
 //        amountOfVoters: Long? = null,
 //    ) : this(

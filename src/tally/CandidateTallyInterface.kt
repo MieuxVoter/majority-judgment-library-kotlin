@@ -1,3 +1,5 @@
+package tally
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 /**

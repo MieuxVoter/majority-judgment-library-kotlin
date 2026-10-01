@@ -1,4 +1,5 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import tally.CandidateTallyInterface
 
 /**
  * Fill the missing judgments into the median grade of each candidate.
@@ -16,7 +17,7 @@ data class MedianDefaultBalancedPollTally(
      * from the tally of the candidate that received the greatest amount of judgments.
      */
     val amountOfVoters: BigInteger? = null,
-) : PollTallyInterface, DefaultGradeTally() {
+) : PollTallyInterface, DefaultGradePollTally() {
 
     init {
         fillWithDefaultGrade(amountOfVoters)

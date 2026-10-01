@@ -2,6 +2,7 @@ import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import tally.CandidateTallyInterface
 
 /**
  * Balanced poll tally using a scaled normalization.
