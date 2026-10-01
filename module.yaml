@@ -1,7 +1,7 @@
 # Configuration file for the Kotlin Toolchain.
 # See https://kotlin-toolchain.org/
 product:
-  # This is a Kotlin Multiplatform Library for Majority Judgment
+  # This is a Kotlin MultiPlatform Library for Majority Judgment
   type: kmp/lib
   # Add/Enable platforms here as needed (but test them, first!)
   platforms:
@@ -31,11 +31,12 @@ product:
     #- wasmWasi
 
 # I was very wary of adding *any* dependency to this library, but in the end it makes sense.
-# We probably should not have any other dependency here than large number support.
+# We probably should not have any other dependency here than large number support, though.
 dependencies:
   # We actually want Big Numbers support for two different reasons:
   # 1. Tally Normalization using the Least Common Multiple (LCM grows fast with primes) — perfect normalization
   # 2. Scalar Majority Merit (easily goes to ~60 decimal places) — it's useful for proportional representation
+  # You can find more details about this in the README.
   - 'com.ionspin.kotlin:bignum:0.3.10':
       exported: true
       scope: all
@@ -48,7 +49,8 @@ test-dependencies:
 
 description: |
   A Kotlin Multiplatform library to efficiently rank candidates using Majority Judgment.
-  Majority Judgment is an elegant voting system used in french wine contests.
+  Majority Judgment is an elegant voting system used in french wine contests, among other things.
+  Its resolution does not require a computer, but it's still handy to be able to do it digitally.
   
   This library supports arbitrarily large amounts of voters — and millions of candidates.
   In addition to ranking, it also provides an extensive analysis of the merit profiles,
@@ -58,10 +60,15 @@ description: |
   It also provides three utilities to balance your tallies, including a Least-Common-Multiple-based normalization.
 
 settings:
+  # https://kotlin-toolchain.org/dev/user-guide/publishing/
+  # See our .env.publish.dist file.
   publishing:
     enabled: true
     group: fr.mieuxvoter
+    # Acronym for 'Kotlin Majority Judgment' ; (mj is already taken by our pure java lib)
     artifactId: kmj
+
+    # We have to keep this in sync with our git tags — by hand.  Sort of annoying.
     version: 0.3.0
 
     mavenCentral: enabled

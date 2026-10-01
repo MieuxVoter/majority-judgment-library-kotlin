@@ -1,3 +1,6 @@
+package result
+
+import CandidateTallyAnalysis
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 /**
@@ -16,8 +19,8 @@ data class CandidateResult(
 
     /**
      * The rank of the candidate in the Majority Judgment ranking
-     * Rank starts at 1 ("best" candidate), and goes upwards. Multiple candidates may receive the same
-     * rank, in the extreme case where they have the exact same merit profile.
+     * Rank starts at 1 ("best" candidate), and goes upwards.
+     * Multiple candidates may receive the same rank, in the extreme case where they have the exact same merit profile.
      */
     val rank: Int,
 
@@ -41,6 +44,10 @@ data class CandidateResult(
      * This is therefore always a value between 0 and 1, inclusive.
      *
      * The sum of the relative merits of all the candidates of a poll is always 1.
+     * This value is provided for convenience, you could compute it yourself.
+     *
+     * It can be used to compute a proportional representation or get a quantitative feel of the closeness of results,
+     * but keep in mind that — unlike Majority Judgment — it is not resilient to strategic voting.
      */
     val relativeMerit: Double,
 
@@ -50,11 +57,13 @@ data class CandidateResult(
      * The "absolute rank" of a merit profile is the rank of that merit profile in the holistic ranking of all possible
      * merit profiles of the same shape and total.  That ranking is usually way too big to be computable.
      *
-     * This value is very experimental and might be subject to changes as our fitting evolves and gets more precise.
-     * Best not rely on this 'til it's stable.
+     * This value is very experimental and might be subject to changes as our fitting evolves and gets more accurate.
+     * Best not rely on this 'til it's stable and better studied.  It is only provided for study purposes.
      *
      * This merit's distribution is quasi-affine over all possible merit profiles of the same shape and total.
-     * It is an approximation because its exact value is quickly un-computable as the amount of judges grows.
+     * It can be used to compute an approximation of the "absolute rank" of a merit profile.
+     * The exact value of the "absolute rank" is quickly un-computable as the amount of judges grows.
+     *
      * Contrary to the BigInteger [merit], this value is always between 0 and 1 (inclusive).
      */
     val affineMerit: Double,
@@ -62,11 +71,13 @@ data class CandidateResult(
     /**
      * This is a value between 0 and 1 (inclusive).
      * The sum of the relative affine merits of all the candidates of a poll is always 1.
+     * This value is provided for convenience, you could compute it yourself.
      */
     val relativeAffineMerit: Double,
 
     /**
-     * Provides more data about the candidate tally, such as the median grade.
+     * Provides more data about the candidate tally, such as the median grade and the majority gauges.
+     * The data in here is handy when you want to draw annotated merit profiles or explain the resolution.
      */
     val analysis: CandidateTallyAnalysis,
 )

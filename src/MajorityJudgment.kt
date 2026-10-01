@@ -5,6 +5,9 @@ import com.ionspin.kotlin.bignum.integer.BigInteger
 import exception.IncoherentTallyException
 import exception.UnbalancedTallyException
 import extension.sumOf
+import result.CandidateResult
+import result.PollResult
+import result.PollResultInterface
 import tally.CandidateTally
 import tally.CandidateTallyInterface
 import tally.PollTallyInterface

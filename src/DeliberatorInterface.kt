@@ -1,3 +1,4 @@
+import result.PollResultInterface
 import tally.PollTallyInterface
 
 /**

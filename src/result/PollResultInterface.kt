@@ -1,4 +1,4 @@
-
+package result
 /**
  * The main output of this Majority Judgment library.
  * This is the output of [MajorityJudgment.deliberate].
