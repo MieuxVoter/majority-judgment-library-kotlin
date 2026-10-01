@@ -46,6 +46,17 @@ test-dependencies:
   # This gets us the @ParameterizedTest goodies
   - 'org.junit.jupiter:junit-jupiter-params:5.1.0'
 
+description: |
+  A Kotlin Multiplatform library to efficiently rank candidates using Majority Judgment.
+  Majority Judgment is an elegant voting system used in french wine contests.
+  
+  This library supports arbitrarily large amounts of voters — and millions of candidates.
+  In addition to ranking, it also provides an extensive analysis of the merit profiles,
+  including a scalar majority merit value that can be useful in a number of ways.
+  
+  For impeccable accuracy and reliability, this library does not use floating-point numbers.
+  It also provides three utilities to balance your tallies, including a Least-Common-Multiple-based normalization.
+
 settings:
   publishing:
     enabled: true
@@ -59,9 +70,6 @@ settings:
     pom:
       url: https://mieuxvoter.fr
       scm: https://github.com/MieuxVoter/majority-judgment-library-kotlin.git
-      description: |
-        A Kotlin Multiplatform library to efficiently rank candidates using Majority Judgment.
-        Majority Judgment is an elegant voting system.
       developers:
         - name: MieuxVoter Devs
           email: dev@mieuxvoter.fr

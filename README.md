@@ -10,6 +10,7 @@ Test-driven Kotlin library to help deliberate (rank candidates) using [Majority 
 
 The goal is to be **scalable**, **reliable**, fast and extensible.
 
+
 ## Features
 
 - [x] Super-fast
