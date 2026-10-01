@@ -1,6 +1,7 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import extension.sumOf
 import tally.CandidateTallyInterface
+import tally.WorkingCandidateTally
 
 /**
  * Collect useful data on a candidate's tally.
@@ -109,12 +110,12 @@ class CandidateTallyAnalysis {
                         .subtract(this.contestationGroupSize)
                         .subtract(this.medianGroupSize)
                 } else {
-                    if (0 < gradeTally.compareTo(BigInteger.ZERO)) { // 0 < gradeTally
+                    if (gradeTally > BigInteger.ZERO) {
                         this.contestationGrade = grade
                     }
                 }
             } else {
-                if (0 < gradeTally.compareTo(BigInteger.ZERO) && 0 == this.adhesionGrade) {
+                if (gradeTally > BigInteger.ZERO && 0 == this.adhesionGrade) {
                     this.adhesionGrade = grade
                 }
             }
