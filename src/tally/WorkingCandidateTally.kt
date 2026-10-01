@@ -1,5 +1,6 @@
+package tally
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import tally.CandidateTallyInterface
 
 /**
  * Mutable candidate tally that we use internally in the recursive (deep) analysis.

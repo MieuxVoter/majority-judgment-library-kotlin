@@ -1,6 +1,6 @@
+package tally
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import tally.CandidateTallyInterface
-import tally.PollTallyInterface
 
 /**
  * Balanced poll tally using a static default grade.

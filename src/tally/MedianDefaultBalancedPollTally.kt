@@ -1,6 +1,7 @@
+package tally
+
+import CandidateTallyAnalysis
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import tally.CandidateTallyInterface
-import tally.PollTallyInterface
 
 /**
  * Fill the missing judgments into the median grade of each candidate.

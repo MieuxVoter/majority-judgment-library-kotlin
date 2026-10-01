@@ -1,3 +1,4 @@
+import tally.CollectedPollTally
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

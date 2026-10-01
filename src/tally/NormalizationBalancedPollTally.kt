@@ -1,10 +1,10 @@
+package tally
+
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import extension.sumOf
-import tally.CandidateTallyInterface
-import tally.PollTallyInterface
 
 /**
  * Balanced poll tally using a scaled normalization.

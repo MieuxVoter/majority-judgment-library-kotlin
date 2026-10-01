@@ -1,7 +1,7 @@
+package tally
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import extension.sumOf
-import tally.CandidateTallyInterface
-import tally.PollTallyInterface
 
 /**
  * Fill the missing judgments into the grade defined by [getDefaultGradeForCandidate].

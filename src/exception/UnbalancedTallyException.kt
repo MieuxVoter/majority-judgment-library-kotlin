@@ -26,8 +26,8 @@ class UnbalancedTallyException(
             }
             append("We provide some balancing strategies you may use:")
             append("\n")
-            append("- StaticDefaultBalancedPollTally\n")
-            append("- NormalizationBalancedPollTally\n")
+            append("- tally.StaticDefaultBalancedPollTally\n")
+            append("- tally.NormalizationBalancedPollTally\n")
             append("\n")
             if (!super.message.isNullOrEmpty()) {
                 append("\n")
