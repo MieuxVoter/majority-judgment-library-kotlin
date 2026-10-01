@@ -139,6 +139,14 @@ We have a bunch of unit tests.
 
 ## Architecture Decisions
 
+### Semantics: Candidate vs Option
+
+We use the term _Candidate_ instead of the term _Option_, which is the term used in political science when studying voting systems.
+The rationale behind this is simple: _Option_ is polysemic enough already in computer science. 
+The term _Candidate_ is sapiocentric, and therefore is not perfect, but it has the very important properties of being common and not ambiguous.
+
+> For a while we experimented with the term _Proposal_, but it's also polysemic so we dropped it.
+
 ### Why bother with BigInteger ?
 
 There are two reasons why we want to be able to handle huge integers, beyond what 64 bits can provide us.
