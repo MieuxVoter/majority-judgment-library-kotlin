@@ -4,6 +4,7 @@ import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import exception.IncoherentTallyException
 import exception.UnbalancedTallyException
+import extension.sumOf
 import tally.CandidateTally
 import tally.CandidateTallyInterface
 

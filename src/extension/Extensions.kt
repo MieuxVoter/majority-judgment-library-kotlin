@@ -1,3 +1,5 @@
+package extension
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 fun <T> Array<out T>.sumOf(selector: (T) -> BigInteger): BigInteger {

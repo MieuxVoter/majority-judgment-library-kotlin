@@ -1,7 +1,7 @@
 package exception
 
 import PollTallyInterface
-import sumOf
+import extension.sumOf
 
 /**
  * Raised when the provided tally does not hold the same amount of judgments for each proposal.
