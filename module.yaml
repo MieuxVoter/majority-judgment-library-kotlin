@@ -3,7 +3,7 @@
 product:
   # This is a Kotlin Multiplatform Library for Majority Judgment
   type: kmp/lib
-  # Add more platforms here as needed (but test them, first!)
+  # Add/Enable platforms here as needed (but test them, first!)
   platforms:
     - jvm
     - android
@@ -45,3 +45,33 @@ test-dependencies:
   - $kotlin.test.junit5
   # This gets us the @ParameterizedTest goodies
   - 'org.junit.jupiter:junit-jupiter-params:5.1.0'
+
+settings:
+  publishing:
+    enabled: true
+    group: fr.mieuxvoter
+    artifactId: kmj
+    version: 0.2.0
+
+    mavenCentral: enabled
+    signArtifacts: true
+    publishSources: true
+    pom:
+      url: https://mieuxvoter.fr
+      scm: https://github.com/MieuxVoter/majority-judgment-library-kotlin.git
+      description: |
+        A Kotlin Multiplatform library to efficiently rank candidates using Majority Judgment.
+        Majority Judgment is an elegant voting system.
+      developers:
+        - name: MieuxVoter Devs
+          email: dev@mieuxvoter.fr
+          organization: MieuxVoter
+          organizationUrl: https://mieuxvoter.fr
+        - name: Dominique Merle
+          email: dominique.merle.41@gmail.com
+          url: https://discord.mieuxvoter.fr
+          organization: MieuxVoter
+          organizationUrl: https://mieuxvoter.fr
+      licenses:
+        - name: MIT
+          url: https://opensource.org/license/mit

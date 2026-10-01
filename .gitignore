@@ -1,3 +1,6 @@
+# Secrets
+/.env.publish
+
 # Build artifacts
 /build
 
