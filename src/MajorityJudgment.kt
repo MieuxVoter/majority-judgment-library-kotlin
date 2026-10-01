@@ -46,37 +46,31 @@ class MajorityJudgment(
         checkTally(tally)
 
         val amountOfCandidates = tally.candidatesTallies.size
-        val amountOfGrades = if (tally.candidatesTallies.isNotEmpty()) {
-            countGrades(tally.candidatesTallies[0])
-        } else {
-            7 // dummy value, it's never going to be used anyway if there are no candidates
-        }
-        val amountOfJudges = if (tally.candidatesTallies.isNotEmpty()) {
-            countJudgments(tally.candidatesTallies[0])
-        } else {
-            BigInteger.ZERO
+        if (amountOfCandidates == 0) {
+            // Rule: No candidates? → No results.
+            return PollResult(
+                candidateResults = emptyList(),
+                candidateResultsRanked = emptyList(),
+            )
         }
 
-        // I Analyze and compute the scalar majority merit of each candidate
+        val amountOfGrades = countGrades(tally.candidatesTallies[0])
+        val amountOfJudges = countJudgments(tally.candidatesTallies[0])
+
+        // I. Analyze and compute the scalar majority merit of each candidate
         val analyses = tally.candidatesTallies.map { CandidateTallyAnalysis(tally = it, favorContestation) }
         val merits = analyses.map { it.merit }
         val sumOfMerits = merits.sumOf { it }
 
         // II.a Compute the (maximum!) merit a 100% EXCELLENT candidate would get
-        //      This is not used in ranking ; it's used to compute the "merit from absolute rank" approximation
-        val maxMerit = if (tally.candidatesTallies.isNotEmpty()) {
-            val amountOfGrades = countGrades(tally.candidatesTallies[0])
-            val amountOfJudges = countJudgments(tally.candidatesTallies[0])
-            val bestMeritProfile = Array(size = amountOfGrades) { BigInteger.ZERO }
-            bestMeritProfile[bestMeritProfile.size - 1] = amountOfJudges
-            val analysis = CandidateTallyAnalysis(
-                tally = CandidateTally(gradesTallies = bestMeritProfile),
-                favorContestation = favorContestation,
-            )
-            analysis.merit
-        } else {
-            BigInteger.ONE // a dummy is OK, it's never going to be used
-        }
+        //      This is not used in ranking ; it's used to compute the optional "merit from absolute rank" approximation
+        val bestMeritProfile = Array(size = amountOfGrades) { BigInteger.ZERO }
+        bestMeritProfile[bestMeritProfile.size - 1] = amountOfJudges
+        val analysis = CandidateTallyAnalysis(
+            tally = CandidateTally(gradesTallies = bestMeritProfile),
+            favorContestation = favorContestation,
+        )
+        val maxMerit = analysis.merit
 
         // II.b Approximate the scalar "merit from absolute rank" of each candidate (Affine Merit)
         //      This (optional) value may be used to compute a naive proportional representation
@@ -91,12 +85,10 @@ class MajorityJudgment(
 
         // III. Prepare the results for each candidate (except the rank)
         val candidateResults = Array(size = amountOfCandidates) { candidateIndex ->
-            val analysis = analyses[candidateIndex]
-
             CandidateResult(
                 index = candidateIndex,
                 rank = 0, // computed later, after the sorting step
-                merit = analysis.merit,
+                merit = merits[candidateIndex],
                 relativeMerit = if (sumOfMerits != BigInteger.ZERO) {
                     BigDecimal.fromBigInteger(merits[candidateIndex])
                         .divide(
@@ -124,7 +116,7 @@ class MajorityJudgment(
                 } else {
                     0.0
                 },
-                analysis = analysis,
+                analysis = analyses[candidateIndex],
             )
         }
 
