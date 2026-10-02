@@ -1,4 +1,4 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
 /**
  * Basic implementation of a [PollTallyInterface] that holds a list of [CandidateTallyInterface].

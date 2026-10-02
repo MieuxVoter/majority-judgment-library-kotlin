@@ -1,4 +1,4 @@
-package result
+package fr.mieuxvoter.kmj.result
 
 import kotlin.math.E
 import kotlin.math.pow

@@ -1,5 +1,7 @@
-import result.PollResultInterface
-import tally.PollTallyInterface
+package fr.mieuxvoter.kmj
+
+import fr.mieuxvoter.kmj.result.PollResultInterface
+import fr.mieuxvoter.kmj.tally.PollTallyInterface
 
 /**
  * A deliberator takes in a poll's tally, which holds the amount of judgments of each grade received

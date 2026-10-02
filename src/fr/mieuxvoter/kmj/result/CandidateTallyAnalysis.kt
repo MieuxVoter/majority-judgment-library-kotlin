@@ -1,9 +1,9 @@
-package result
+package fr.mieuxvoter.kmj.result
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import extension.sumOf
-import tally.CandidateTallyInterface
-import tally.WorkingCandidateTally
+import fr.mieuxvoter.kmj.extension.sumOf
+import fr.mieuxvoter.kmj.tally.CandidateTallyInterface
+import fr.mieuxvoter.kmj.tally.WorkingCandidateTally
 
 /**
  * Collect useful data on a candidate's tally.

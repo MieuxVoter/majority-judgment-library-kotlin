@@ -1,8 +1,8 @@
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import tally.CandidateTally
-import tally.NormalizationBalancedPollTally
+import fr.mieuxvoter.kmj.tally.CandidateTally
+import fr.mieuxvoter.kmj.tally.NormalizationBalancedPollTally
 import kotlin.test.assertContentEquals
 
 class NormalizationBalancedPollTallyTest {

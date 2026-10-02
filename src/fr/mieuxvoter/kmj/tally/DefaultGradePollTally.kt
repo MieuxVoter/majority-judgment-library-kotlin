@@ -1,7 +1,7 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import extension.sumOf
+import fr.mieuxvoter.kmj.extension.sumOf
 
 /**
  * Fill the missing judgments into the grade defined by [getDefaultGradeForCandidate].

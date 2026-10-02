@@ -1,18 +1,20 @@
+package fr.mieuxvoter.kmj
+
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import exception.IncoherentTallyException
-import exception.UnbalancedTallyException
-import extension.sumOf
-import result.CandidateResult
-import result.CandidateTallyAnalysis
-import result.MeritToAbsoluteRankModel
-import result.PollResult
-import result.PollResultInterface
-import tally.CandidateTally
-import tally.CandidateTallyInterface
-import tally.PollTallyInterface
+import fr.mieuxvoter.kmj.exception.IncoherentTallyException
+import fr.mieuxvoter.kmj.exception.UnbalancedTallyException
+import fr.mieuxvoter.kmj.extension.sumOf
+import fr.mieuxvoter.kmj.result.CandidateResult
+import fr.mieuxvoter.kmj.result.CandidateTallyAnalysis
+import fr.mieuxvoter.kmj.result.MeritToAbsoluteRankModel
+import fr.mieuxvoter.kmj.result.PollResult
+import fr.mieuxvoter.kmj.result.PollResultInterface
+import fr.mieuxvoter.kmj.tally.CandidateTally
+import fr.mieuxvoter.kmj.tally.CandidateTallyInterface
+import fr.mieuxvoter.kmj.tally.PollTallyInterface
 
 /**
  * Deliberate (i.e. rank candidates) using Majority Judgment.

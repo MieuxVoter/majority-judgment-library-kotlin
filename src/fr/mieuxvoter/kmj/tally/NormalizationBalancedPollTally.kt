@@ -1,10 +1,10 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import extension.sumOf
+import fr.mieuxvoter.kmj.extension.sumOf
 
 /**
  * Balanced poll tally using a scaled normalization.

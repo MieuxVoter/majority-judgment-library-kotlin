@@ -1,6 +1,6 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
-import result.CandidateTallyAnalysis
+import fr.mieuxvoter.kmj.result.CandidateTallyAnalysis
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
 /**

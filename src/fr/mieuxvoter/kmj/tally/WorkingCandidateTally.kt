@@ -1,4 +1,4 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 

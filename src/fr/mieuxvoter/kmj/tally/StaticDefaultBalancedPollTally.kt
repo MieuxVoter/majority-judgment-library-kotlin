@@ -1,4 +1,4 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 
@@ -33,7 +33,7 @@ data class StaticDefaultBalancedPollTally(
     // TBD: I want alternative constructors, but … ambiguity !  Perhaps with Union Types ?
 
 //    constructor(
-//        candidatesTallies: List<tally.CandidateTallyInterface>,
+//        candidatesTallies: List<fr.mieuxvoter.kmj.CandidateTallyInterface>,
 //        defaultGrade: Int = 0,
 //        amountOfVoters: Int? = null,
 //    ) : this(
@@ -46,7 +46,7 @@ data class StaticDefaultBalancedPollTally(
 //        },
 //    )
 //    constructor(
-//        candidatesTallies: List<tally.CandidateTallyInterface>,
+//        candidatesTallies: List<fr.mieuxvoter.kmj.CandidateTallyInterface>,
 //        defaultGrade: Int = 0,
 //        amountOfVoters: Long? = null,
 //    ) : this(

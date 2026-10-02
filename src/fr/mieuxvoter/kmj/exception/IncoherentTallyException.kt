@@ -1,4 +1,4 @@
-package exception
+package fr.mieuxvoter.kmj.exception
 /**
  * Raised when the provided tally holds negative values, or disparate amounts of grades.
  */

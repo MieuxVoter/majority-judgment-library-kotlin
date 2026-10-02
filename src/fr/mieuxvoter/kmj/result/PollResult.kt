@@ -1,4 +1,4 @@
-package result
+package fr.mieuxvoter.kmj.result
 
 /**
  * See [PollResultInterface].

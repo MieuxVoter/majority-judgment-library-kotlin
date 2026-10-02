@@ -69,7 +69,7 @@ settings:
     artifactId: kmj
 
     # We have to keep this in sync with our git tags — by hand.  Sort of annoying.
-    version: 0.3.0
+    version: 0.4.0
 
     mavenCentral: enabled
     signArtifacts: true

@@ -1,6 +1,6 @@
-package result
+package fr.mieuxvoter.kmj.result
 
-import MajorityJudgment
+import fr.mieuxvoter.kmj.MajorityJudgment
 
 /**
  * The main output of this Majority Judgment library.
@@ -8,8 +8,8 @@ import MajorityJudgment
  */
 interface PollResultInterface {
     /**
-     * List of [CandidateResult], in the order the [tally.CandidateTally]s were initially submitted
-     * in the input [tally.PollTallyInterface.candidatesTallies].
+     * List of [CandidateResult], in the order the [fr.mieuxvoter.kmj.tally.CandidateTally]s were initially submitted
+     * in the input [fr.mieuxvoter.kmj.tally.PollTallyInterface.candidatesTallies].
      *
      * You can get the rank of each candidate by accessing [CandidateResult.rank].
      */

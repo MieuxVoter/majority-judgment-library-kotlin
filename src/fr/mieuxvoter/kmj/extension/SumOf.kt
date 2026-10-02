@@ -1,4 +1,4 @@
-package extension
+package fr.mieuxvoter.kmj.extension
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 

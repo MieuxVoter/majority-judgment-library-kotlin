@@ -1,4 +1,4 @@
-package tally
+package fr.mieuxvoter.kmj.tally
 
 /**
  * The main input of the Majority Judgment library.

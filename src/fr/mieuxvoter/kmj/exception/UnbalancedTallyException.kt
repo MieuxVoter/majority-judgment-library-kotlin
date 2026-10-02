@@ -1,7 +1,7 @@
-package exception
+package fr.mieuxvoter.kmj.exception
 
-import tally.PollTallyInterface
-import extension.sumOf
+import fr.mieuxvoter.kmj.tally.PollTallyInterface
+import fr.mieuxvoter.kmj.extension.sumOf
 
 /**
  * Raised when the provided tally does not hold the same amount of judgments for each proposal.
@@ -26,8 +26,8 @@ class UnbalancedTallyException(
             }
             append("We provide some balancing strategies you may use:")
             append("\n")
-            append("- tally.StaticDefaultBalancedPollTally\n")
-            append("- tally.NormalizationBalancedPollTally\n")
+            append("- fr.mieuxvoter.kmj.StaticDefaultBalancedPollTally\n")
+            append("- fr.mieuxvoter.kmj.NormalizationBalancedPollTally\n")
             append("\n")
             if (!super.message.isNullOrEmpty()) {
                 append("\n")
