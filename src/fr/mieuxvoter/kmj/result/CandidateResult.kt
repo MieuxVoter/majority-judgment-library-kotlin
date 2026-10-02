@@ -1,6 +1,7 @@
 package fr.mieuxvoter.kmj.result
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import fr.mieuxvoter.kmj.analysis.CandidateTallyAnalysis
 
 /**
  * Result of the Majority Judgment deliberation (ranking) for a single candidate.

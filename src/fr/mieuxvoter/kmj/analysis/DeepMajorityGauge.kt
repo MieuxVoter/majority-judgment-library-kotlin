@@ -1,4 +1,4 @@
-package fr.mieuxvoter.kmj.result
+package fr.mieuxvoter.kmj.analysis
 
 /**
  * This holds all the information we need to rank the candidates, without approximation.

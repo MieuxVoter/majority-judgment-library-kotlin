@@ -1,4 +1,4 @@
-package fr.mieuxvoter.kmj.result
+package fr.mieuxvoter.kmj.analysis
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import fr.mieuxvoter.kmj.extension.sumOf

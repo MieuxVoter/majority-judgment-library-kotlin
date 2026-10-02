@@ -73,10 +73,10 @@ data class NormalizationBalancedPollTally(
     fun guessLcmScale(tallies: List<CandidateTallyInterface>): BigInteger {
         var lcmScale = BigInteger.ONE
 
-        tallies.forEach {
-            val sum = it.gradesTallies.sumOf { it }
+        tallies.forEach { candidateTally ->
+            val sum = candidateTally.gradesTallies.sumOf { gradeTally -> gradeTally }
             if (sum > BigInteger.ZERO) {
-                lcmScale = lcm(lcmScale, sum)
+                lcmScale = lcm(a = lcmScale, b = sum)
             }
         }
 

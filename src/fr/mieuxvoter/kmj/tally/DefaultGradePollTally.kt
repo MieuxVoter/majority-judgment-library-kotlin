@@ -15,7 +15,9 @@ abstract class DefaultGradePollTally : PollTallyInterface {
     protected abstract fun getDefaultGradeForCandidate(candidateTally: CandidateTallyInterface): Int
 
     protected fun guessAmountOfVoters(): BigInteger {
-        return candidatesTallies.maxOfOrNull { it.gradesTallies.sumOf { it } } ?: BigInteger.ZERO
+        return candidatesTallies.maxOfOrNull { candidateTally ->
+            candidateTally.gradesTallies.sumOf { it }
+        } ?: BigInteger.ZERO
     }
 
     protected fun fillWithDefaultGrade(

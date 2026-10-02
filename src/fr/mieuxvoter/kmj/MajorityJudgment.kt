@@ -4,11 +4,11 @@ import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import fr.mieuxvoter.kmj.analysis.CandidateTallyAnalysis
 import fr.mieuxvoter.kmj.exception.IncoherentTallyException
 import fr.mieuxvoter.kmj.exception.UnbalancedTallyException
 import fr.mieuxvoter.kmj.extension.sumOf
 import fr.mieuxvoter.kmj.result.CandidateResult
-import fr.mieuxvoter.kmj.result.CandidateTallyAnalysis
 import fr.mieuxvoter.kmj.result.MeritToAbsoluteRankModel
 import fr.mieuxvoter.kmj.result.PollResult
 import fr.mieuxvoter.kmj.result.PollResultInterface

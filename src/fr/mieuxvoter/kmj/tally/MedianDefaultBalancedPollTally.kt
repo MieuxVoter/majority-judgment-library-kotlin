@@ -1,7 +1,7 @@
 package fr.mieuxvoter.kmj.tally
 
-import fr.mieuxvoter.kmj.result.CandidateTallyAnalysis
 import com.ionspin.kotlin.bignum.integer.BigInteger
+import fr.mieuxvoter.kmj.analysis.CandidateTallyAnalysis
 
 /**
  * Fill the missing judgments into the median grade of each candidate.
