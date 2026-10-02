@@ -16,6 +16,8 @@ class CandidateTallyAnalysis {
     var tally: CandidateTallyInterface
         private set
 
+    private var favorContestation: Boolean = true
+
     var totalSize: BigInteger = BigInteger.ZERO // amount of judges
         private set
 
@@ -58,17 +60,13 @@ class CandidateTallyAnalysis {
         deep: Boolean = true,
     ) {
         this.tally = tally
-        reanalyze(tally, favorContestation)
-        if (deep) {
-            performDeepAnalysis(favorContestation)
-        }
+        this.favorContestation = favorContestation
+
+        performAnalysis()
+        if (deep) performDeepAnalysis()
     }
 
-    fun reanalyze(
-        tally: CandidateTallyInterface,
-        favorContestation: Boolean = true,
-    ) {
-        this.tally = tally
+    private fun performAnalysis() {
         this.totalSize = BigInteger.ZERO
         this.medianGrade = 0
         this.medianGroupSize = BigInteger.ZERO
@@ -77,7 +75,7 @@ class CandidateTallyAnalysis {
         this.adhesionGrade = 0
         this.adhesionGroupSize = BigInteger.ZERO
 
-        val gradesTallies = tally.gradesTallies
+        val gradesTallies = this.tally.gradesTallies
         val amountOfGrades = gradesTallies.size
 
         for (gradeTally in gradesTallies) {
@@ -85,7 +83,7 @@ class CandidateTallyAnalysis {
             this.totalSize += gradeTally
         }
 
-        val medianOffset = if (favorContestation) {
+        val medianOffset = if (this.favorContestation) {
             1
         } else {
             2
@@ -132,7 +130,7 @@ class CandidateTallyAnalysis {
             this.secondMedianGrade = this.contestationGrade
             this.secondMedianGroupSign = -1
         } else { // equality
-            if (favorContestation) {
+            if (this.favorContestation) {
                 this.secondMedianGrade = this.contestationGrade
                 this.secondMedianGroupSign = -1
             } else {
@@ -141,7 +139,7 @@ class CandidateTallyAnalysis {
             }
         }
 
-        if (0 == this.secondMedianGroupSize.compareTo(BigInteger.ZERO)) {
+        if (this.secondMedianGroupSize == BigInteger.ZERO) {
             this.secondMedianGroupSign = 0
         }
     }
@@ -152,9 +150,7 @@ class CandidateTallyAnalysis {
      *
      * This uses (shallow) [CandidateTallyAnalysis] internally.
      */
-    private fun performDeepAnalysis(
-        favorContestation: Boolean = true,
-    ) {
+    private fun performDeepAnalysis() {
         // We use a working copy so we can mutate it safely without affecting the original.
         val currentTally = WorkingCandidateTally(gradesTallies = this.tally.gradesTallies.copyOf())
         val startingGrade = this.medianGrade
@@ -212,7 +208,7 @@ class CandidateTallyAnalysis {
      */
     private fun computeScalarMerit(): BigInteger {
         require(this.deepMajorityGauge != null) { "Perform a deep analysis first." }
-        val amountOfVoters = tally.gradesTallies.sumOf { it }
+        val amountOfVoters = this.tally.gradesTallies.sumOf { it }
 
         var merit = BigInteger.fromInt(this.medianGrade)
         this.deepMajorityGauge!!.gauges.forEach { gauge ->
@@ -223,24 +219,30 @@ class CandidateTallyAnalysis {
         return merit
     }
 
-    // TBD: for later
-    private fun computeResolution(
-        tally: CandidateTallyInterface,
-        favorContestation: Boolean = true,
-    ): Array<ParticipantGroup> {
+    /**
+     * List all the participant groups that can contribute to the ranking decision.
+     * There are multiple groups because of tie-breaking.
+     * This could in theory be used in ranking, although its data structure would be awkward for it.
+     * We use this to annotate visualizations of merit profiles, to better explain duels.
+     */
+    fun collectDecisiveGroups(): List<ParticipantGroup> {
         val participantGroups = ArrayList<ParticipantGroup>()
-        val currentTally = WorkingCandidateTally(tally.gradesTallies.copyOf())
-        val analysis = CandidateTallyAnalysis(currentTally, favorContestation)
+        val currentTally = WorkingCandidateTally(this.tally.gradesTallies.copyOf())
+        var analysis = CandidateTallyAnalysis(currentTally, this.favorContestation, deep = false)
 
-        participantGroups.add(
-            ParticipantGroup(
-                analysis.medianGroupSize, analysis.medianGrade, ParticipantGroup.Type.Median
+        if (analysis.medianGroupSize > 0) {
+            participantGroups.add(
+                ParticipantGroup(
+                    size = analysis.medianGroupSize,
+                    grade = analysis.medianGrade,
+                    type = ParticipantGroup.Type.Median,
+                )
             )
-        )
+        }
 
-        val amountOfGrades = tally.gradesTallies.size
-        repeat(amountOfGrades - 1) {
-            analysis.reanalyze(currentTally, favorContestation)
+        val amountOfGrades = this.tally.gradesTallies.size
+        repeat(times = amountOfGrades - 1) {
+            analysis = CandidateTallyAnalysis(currentTally, this.favorContestation, deep = false)
 
             var type = ParticipantGroup.Type.Median
             if (analysis.secondMedianGroupSign > 0) {
@@ -252,7 +254,9 @@ class CandidateTallyAnalysis {
             if (type != ParticipantGroup.Type.Median) { // ie. secondMedianGroupSize != 0
                 participantGroups.add(
                     ParticipantGroup(
-                        analysis.secondMedianGroupSize, analysis.secondMedianGrade, type
+                        size = analysis.secondMedianGroupSize,
+                        grade = analysis.secondMedianGrade,
+                        type = type,
                     )
                 )
             }
@@ -263,6 +267,6 @@ class CandidateTallyAnalysis {
             )
         }
 
-        return participantGroups.toTypedArray<ParticipantGroup>()
+        return participantGroups
     }
 }
