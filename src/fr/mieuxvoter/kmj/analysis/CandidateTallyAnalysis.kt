@@ -12,6 +12,7 @@ import fr.mieuxvoter.kmj.tally.WorkingCandidateTally
 class CandidateTallyAnalysis {
 
     // I'm not keen on using 'var' with 'private set' ; refactor at will
+    // More generally, the architecture of this class is BAD — 'deep' shenanigans
 
     var tally: CandidateTallyInterface
         private set
@@ -52,6 +53,15 @@ class CandidateTallyAnalysis {
         private set
 
     var merit: BigInteger = BigInteger.ZERO
+        private set
+
+    /**
+     * List of all the participant groups that can contribute to the ranking decision.
+     * There are multiple groups because of tie-breaking.
+     * This could in theory be used in ranking, although its data structure would be awkward for it.
+     * We use this to annotate visualizations of merit profiles, to better explain duels.
+     */
+    var decisiveGroups: List<ParticipantGroup> = emptyList()
         private set
 
     constructor(
@@ -194,6 +204,8 @@ class CandidateTallyAnalysis {
         })
 
         this.merit = computeScalarMerit()
+
+        this.decisiveGroups = collectDecisiveGroups()
     }
 
     /**
@@ -220,12 +232,9 @@ class CandidateTallyAnalysis {
     }
 
     /**
-     * List all the participant groups that can contribute to the ranking decision.
-     * There are multiple groups because of tie-breaking.
-     * This could in theory be used in ranking, although its data structure would be awkward for it.
-     * We use this to annotate visualizations of merit profiles, to better explain duels.
+     * @see decisiveGroups
      */
-    fun collectDecisiveGroups(): List<ParticipantGroup> {
+    private fun collectDecisiveGroups(): List<ParticipantGroup> {
         val participantGroups = ArrayList<ParticipantGroup>()
         val currentTally = WorkingCandidateTally(this.tally.gradesTallies.copyOf())
         var analysis = CandidateTallyAnalysis(currentTally, this.favorContestation, deep = false)

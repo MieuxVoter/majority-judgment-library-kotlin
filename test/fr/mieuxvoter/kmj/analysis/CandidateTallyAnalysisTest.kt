@@ -126,7 +126,7 @@ class CandidateTallyAnalysisTest {
             deep = true,
         )
 
-        val actualDecisiveGroups = analysis.collectDecisiveGroups()
+        val actualDecisiveGroups = analysis.decisiveGroups
 
         assertEquals(
             expected = datum.expectedGroups.size,
