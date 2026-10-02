@@ -8,31 +8,19 @@ import fr.mieuxvoter.kmj.extension.sumOf
 
 /**
  * Balanced poll tally using a scaled normalization.
- * We normalize using the Least Common Multiple (LCM).
+ * We normalize using the Least Common Multiple (LCM), to bypass IEE 754 shenanigans.
  *
- * Make sure to only process candidates tallies with at least one judgment.
+ * This is handy when you have hundreds of candidates, and voters can't be expected to judge them all.
+ *
+ * Things to keep in mind:
+ * - You should exclude candidates with low participation (skewed results)
+ *   For example, a candidate having received only ONE "excellent" judgment will win,
+ *   because this normalization will give them many "excellent" judgments.
+ * - You MUST exclude candidates with no participation (division by zero)
+ * - You should ensure, as best you can, that participation is somewhat equivalent across candidates
  */
 data class NormalizationBalancedPollTally(
     override val candidatesTallies: List<CandidateTallyInterface>,
-
-    /**
-     * PARAMETER DISABLED FOR NOW
-     * Would love this parameter, but it's too much of a hassle for now.
-     * Look into Sainte Lague, etc.
-     * Therefore, only using the LCM for now ; it's simpler.
-     * --------------------------
-     *
-     * You may use a bigger value here, but you probably should not use a lower value,
-     * as it will drastically augment the loss of precision, and make the results worthless.
-     *
-     * Anyway, we've hardcoded a lower bound at 1 for this value.
-     * Best not use a value below 100, unless you know what you are doing.
-     *
-     * 100 is for percentages.
-     * 1000 is for permillages, etc.
-     */
-    //val normalizationScale: BigInteger = BigInteger.fromInt(100),
-
 ) : PollTallyInterface {
 
     init {
@@ -48,10 +36,14 @@ data class NormalizationBalancedPollTally(
         candidateTally: CandidateTallyInterface,
         scale: BigInteger,
     ) {
+        if (candidateTally.gradesTallies.isEmpty()) {
+            return
+        }
+
         val initialScale = candidateTally.gradesTallies.sumOf { it }
 
-        // TBD: maybe we should throw here instead of filling the lowest grade like pigs
-        if (initialScale == BigInteger.ZERO && candidateTally.gradesTallies.isNotEmpty()) {
+        // TBD: maybe we should throw here instead of filling the lowest grade like pigs?
+        if (initialScale == BigInteger.ZERO) {
             candidateTally.gradesTallies[0] = scale
             return
         }

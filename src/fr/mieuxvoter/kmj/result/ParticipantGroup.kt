@@ -8,7 +8,7 @@ data class ParticipantGroup(
     var type: Type,
 ) {
     enum class Type {
-        Median,
+        Median, // a.k.a. Majority
         Contestation,
         Adhesion,
     }
