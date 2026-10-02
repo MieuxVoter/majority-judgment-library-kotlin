@@ -1,4 +1,5 @@
-import fr.mieuxvoter.kmj.tally.CollectedPollTally
+package fr.mieuxvoter.kmj.tally
+
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

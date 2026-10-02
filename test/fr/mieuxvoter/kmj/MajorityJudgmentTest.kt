@@ -1,7 +1,8 @@
+package fr.mieuxvoter.kmj
+
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import fr.mieuxvoter.kmj.exception.IncoherentTallyException
 import fr.mieuxvoter.kmj.exception.UnbalancedTallyException
-import fr.mieuxvoter.kmj.MajorityJudgment
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import fr.mieuxvoter.kmj.tally.CandidateTally
@@ -296,9 +297,9 @@ class MajorityJudgmentTest {
         )
 
         // Now the candidates' tallies are balanced
-        println(tally.candidatesTallies[0].gradesTallies.contentToString()) // [1, 2, 3, 4, 5]
-        println(tally.candidatesTallies[1].gradesTallies.contentToString()) // [3, 3, 3, 3, 3]
-        println(tally.candidatesTallies[2].gradesTallies.contentToString()) // [5, 5, 0, 0, 5]
+        //println(tally.candidatesTallies[0].gradesTallies.contentToString()) // [1, 2, 3, 4, 5]
+        //println(tally.candidatesTallies[1].gradesTallies.contentToString()) // [3, 3, 3, 3, 3]
+        //println(tally.candidatesTallies[2].gradesTallies.contentToString()) // [5, 5, 0, 0, 5]
 
         assertContentEquals(
             expected = arrayOf(1, 2, 3, 4, 5).map { BigInteger.fromInt(it) }.toTypedArray(),
@@ -315,8 +316,8 @@ class MajorityJudgmentTest {
 
         val result = mj.deliberate(tally)
 
-        println(result.candidateResults.map { it.rank }) // [1, 2, 3]
-        println(result.candidateResultsRanked.map { it.index }) // [0, 1, 2]
+        //println(result.candidateResults.map { it.rank }) // [1, 2, 3]
+        //println(result.candidateResultsRanked.map { it.index }) // [0, 1, 2]
 
         assertContentEquals(
             expected = arrayOf(1, 2, 3),
